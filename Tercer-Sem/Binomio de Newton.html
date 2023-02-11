@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binomio de Newton</title>
+
+    <style>
+
+      body{
+          background-color: rgb(227, 227, 225);
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      button:hover{
+            background-color: rgb(219, 97, 97);
+
+        }
+
+      .button{
+        background-color: #4CAF50; /* Green */
+            border: none;
+             color: white;
+             padding: 10px 10px;
+             border-radius: 15px;
+             width: 250px;
+             text-align: center;
+             text-decoration: none;
+             display: inline-block;
+             font-size: 10px;
+        }
+
+        .button2{
+        background-color: #1d1d1d; /* Green */
+            border: none;
+             color: white;
+             padding: 10px 10px;
+             width: 60px;
+             text-align: center;
+             text-decoration: none;
+             display: inline-block;
+             font-size: 10px;
+        }
+
+        .cv{
+          background-color: #4CAF50; /* Green */
+            border: none;
+             color: white;
+             padding: 10px 10px;
+             border-radius: 15px;
+             width: 250px;
+             text-align: center;
+             text-decoration: none;
+             display: inline-block;
+             font-size: 10px;
+        }
+
+        
+
+        .texto{
+            border: 0;
+            padding-right: 50px;
+            padding: 5px;
+        }
+
+        .texto2{
+          background-color: rgb(217, 184, 38);
+          font-weight: bolder;
+          text-align: center;
+        }
+
+        .img{
+          padding-right: 20px;
+          height: 100px;
+        }
+      </style>
+</head>
+<body>
+    <SCRIPT LANGUAGE="JavaScript"> 
+
+        //Valores por defecto:
+        var n=2;
+        var t1="a";
+        var t2="b";
+        var sig="+";
+        var nucom=new Array()			 
+        
+        function Salida(){ 
+            Ventana13=open("","ventana13","titlebar=no,resizable,scrollbars,height=300,width=800,screenX=100, screenY=200"); 
+            Ventana13.document.write("<p> Resultado: ("+t1+sig+t2+")<sup>"+n+"</sup> = ");
+            if (t1.length > 1) {t1="("+t1+")"};
+            if (t2.length > 1) {t2="("+t2+")"};
+            for (var i=0; i <= n; i++) 
+              { 	k = n-i;
+                Ventana13.document.write("(<sup>"+n+"</sup><sub>"+i+"</sub>)");
+                Ventana13.document.write(t1+"<sup>"+k+"</sup>"+t2+"<sup>"+i+"</sup> ");
+                if (i<n)
+                 { if ((i%2) == 0)
+                    {Ventana13.document.write(sig)}
+                    else
+                    {Ventana13.document.write("+")}
+                  }
+              }
+        
+            Ventana13.document.write("<BR> ............   = ");
+        
+            for (var i=0; i <= n; i++) 
+              { 	k = n-i;
+                Ventana13.document.write(nucom[i]);
+                Ventana13.document.write(t1+"<sup>"+k+"</sup>"+t2+"<sup>"+i+"</sup> ");
+                if (i<n)
+                  {if ((i%2) == 0)
+                    {Ventana13.document.write(sig)}
+                    else
+                    {Ventana13.document.write("+")}
+                  }
+              }
+        
+            Ventana13.document.write("<br>");
+            Ventana13.focus(); 
+        }
+        
+        function Cierraventana13(){ 
+        Ventana13.close(); 
+        } 
+        
+        
+        
+        function calcnucom()	
+        {
+        for (var i=0; i < n; i++)  {nucom[i]=0}
+        nucom[n]=1
+        for (var i=0; i < n; i++)  
+            { for (var j=0; j < n; j++)  
+                { nucom[j]+=nucom[j+1]}
+            }
+        }
+        
+        function potenbi(form)
+        {
+        // Controlando la entrada
+         
+          n=eval(form.expo.value)
+          t1=form.term1.value;
+          t2=form.term2.value;
+          sig=form.signo.value;
+        
+          if ((sig != "+") && (sig != "-"))
+            {alert("el signo sólo puede ser + o -") }
+            else {if (n<2 || n>20)
+                  {alert("el exponente ha de estar entre 2 y 20") }
+                  else 
+                    {
+        //	 alert("la entrada es correcta")
+                     calcnucom()	
+        //			alert("los números combinat. son "+nucom.join("-"))
+                    
+                    Salida()
+        
+        
+                      }
+                }
+        }
+        
+        </SCRIPT> 
+        </HEAD> 
+        <BODY>
+            <BR>
+
+              <form action="https://1drv.ms/p/s!AlEkZwmG57du0maB19XrrkTBrFtk?e=dZtZnY&nav=eyJzSWQiOjI2MywiY0lkIjozMTQyNzU4NzQyfQ">
+                <input type="submit" class="button2" value="Regresar" />
+        </form>
+
+        <p align="center"><font size="5"><strong>Binomio
+            de Newton</strong></font></p>
+            
+            <FORM>
+            
+            Si quieres calcular alguna potencia de un binomio, anótalo, si no dale click al botón regresar:
+            <BR>
+            <BR>
+            <CENTER>
+            
+            
+             Exponente: - - - - - - - - - - - - > 
+            <INPUT class="texto" TYPE="text" NAME="expo" SIZE=2 VALUE="2"> 
+            <BR>
+            Binomio:  ( 
+            <INPUT TYPE="text" NAME="term1" SIZE=3 VALUE="a"> 
+            <INPUT TYPE="text" NAME="signo" SIZE=1 VALUE="+"> 
+            <INPUT TYPE="text" NAME="term2" SIZE=3 VALUE="b"> 
+            )
+            <BR>   <BR>
+            <INPUT class="button" TYPE="button" VALUE="Calcula" onClick="potenbi(this.form)">  
+            
+            <BR><BR>
+            Presiona sobre el botón para cerrar la ventana de cálculo:
+            <BR>
+            <BR>
+             <input class="cv" type="button" name="Abreventana" value="Cierra la ventana" onclick="Cierraventana13()"> 
+            
+            <BR>
+              <BR>
+
+            </CENTER>
+            
+            </FORM>
+            <div class="texto1">
+              <p> 
+                <img src="newton.jpg" class="img" align="left"> <p class="texto2">Dato curiso:</p> 
+                <br>
+                Sabías que el Binomio de Newton puede aplicarse a prácticamente todas las actividades humanas donde se desee calcular la probabilidad de ocurrencia de un evento para tomar decisiones, en el campo gerencial es supremamente valioso para el crecimiento y desarrollo de la empresa.
+              </p>
+          </div>
+
+
+        
+</body>
+</html>
