@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regla de los 4 pasos</title>
+</head>
+<body>
+    <h1>Regla de los 4 pasos</h1>
+    <p class="tx">Inserte en la parte de abajo la ecuación
+         para sacar la derivada de la siguiente manera (Ejemplo): (+3x^3 + 4x^2 +5) <br> Nota: No se aceptan números de dos dígitos<p>
+    <form action="">
+        <label for="Ecuacion"></label>
+        <input class="texto" type="text" name="Ecuacion" id="" placeholder="Escribe la ecuacion aqui">
+<br>
+<br>
+        <input class="button" type="submit" value="Enviar">
+    </form>
+    <div class="derivada">
+        <br>
+        <br>
+        <p> 
+            <img src="lei.jpg" class="img" align="left"> <p id="texto2">Dato curiso:</p> 
+            <br>
+            En el último tercio del siglo XVII, Newton (en 1664 - 1666) y Leibniz (en 1675) inventaron el Cálculo (de forma independiente): Uni caron y resumieron en dos conceptos generales, el de integral y derivada, la gran variedad de técnicas diversas y de problemas que se abordaban con métodos particulares.
+          </p>
+    </div>
+<br>
+<br>
+    <form action="https://1drv.ms/p/s!AlEkZwmG57du0maB19XrrkTBrFtk?e=Wy8ldu&nav=eyJzSWQiOjI2MywiY0lkIjozMTQyNzU4NzQyfQ">
+        <input type="submit" class="button2" value="Regresar" />
+    </form>
+
+    <script>
+        const formulario = document.querySelector('form');
+const resultado = document.querySelector('.derivada')
+
+let valorIndependiente;
+let ecuacionRemplazada = [];
+let divisionEcuacion = [];
+let BN = "" 
+let bnArray
+let bnArrayFilter
+
+//Cargar eventos
+cargarEventListeners();
+
+function cargarEventListeners(){
+    formulario.addEventListener('submit', capturarFormulario);
+}
+
+function capturarFormulario(e){
+    e.preventDefault()
+        data = Object.fromEntries(
+            new FormData(e.target)
+        )
+        variables(data);
+
+}
+
+//Almacenar Valores en una variable
+function variables(data){
+    valorIndependiente = parseFloat(data.valorSolo);
+    potenciaMayor = data.PotenciaMayor;
+    let Ecuacion = data.Ecuacion;
+
+    separarEcuacion(Ecuacion);
+}
+
+//Separa la ecuacion en un arreglo
+function separarEcuacion(ecuacion){
+    divisionEcuacion = ecuacion.split(" ");
+    antesEcuacion = divisionEcuacion.length;
+
+    console.log(divisionEcuacion)
+    RemplazoX(divisionEcuacion)
+}
+
+//Remplazar x por (x + h)
+function RemplazoX(ecuacion){
+    
+    ecuacion.map( e => {
+        let remplazo = e.replace("x", "(x+h)");
+        ecuacionRemplazada.push(remplazo);
+        // ecuacionRemplazada.push(e);
+    })
+
+    console.log(ecuacionRemplazada);
+    ecuacionRemplazada.map(e => {
+        BN = BN + BinomioNewton(e[8], e[3], e[1]) 
+    });
+    
+    console.log(BN)
+    bnArray = BN.split(" ");
+    console.log(EliminarEcuacion(divisionEcuacion));
+    // document.write(EliminarH(bnArrayFilter))
+    resultado.innerHTML = EliminarH(bnArrayFilter)
+    limpiarMemoria()
+
+   
+}
+
+//Aplica binomio de Newton
+function BinomioNewton(potencia, incognita, constanteNatural){
+    parseInt(constanteNatural)
+    let texto = "";
+    let constante = 1;
+    for(let  i = 0; i <= potencia + 1; i++){
+        //Si la primera se hace 
+        if(i == 0){
+            texto = `+${texto}${constante * parseInt(constanteNatural)}${incognita}^${potencia} `;
+            constante = constante * potencia;
+        }else{
+            //Ultima ejecucion
+            if(i == potencia){
+                texto = `${texto}+${constante * parseInt(constanteNatural)}h^${potencia} `
+                return texto
+            }else{
+                //Caso general
+                texto = `${texto}+${constante * parseInt(constanteNatural)}${incognita}^${potencia-i}h^${i} `
+                constante = (constante * (potencia-i))/(i+1)
+            }
+            
+        }
+    }
+}
+
+function EliminarEcuacion(normal){
+    bnArrayFilter = bnArray.filter((item) => !normal.includes(item))
+    
+    return bnArrayFilter;
+}
+
+function EliminarH(bn){
+    let eliminado
+    let derivada = []
+    for(let i = 0; i < bn.length; i++){
+
+        let tamaño = bn[i].length
+        if(bn[i][tamaño - 1] == 1){
+            eliminado = bn[i].slice(0,  tamaño-3);
+            derivada.push(eliminado)
+        }
+
+    }
+    return derivada
+}
+
+function limpiarMemoria(){
+    ecuacionRemplazada = [];
+    divisionEcuacion = [];
+    BN = ""
+    bnArray = []
+    bnArrayFilter = []
+}
+
+    </script>
+
+    <style>
+        body{
+            background-color: rgb(222, 222, 222);
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h1{
+            padding-bottom: 10px;
+        }
+
+        h2{
+            padding-bottom: 20px;
+        }
+
+        .button{
+            background-color: #4CAF50; /* Green */
+            border: none;
+             color: white;
+             padding: 10px 10px;
+             border-radius: 15px;
+             width: 250px;
+             text-align: center;
+             text-decoration: none;
+             display: inline-block;
+             font-size: 10px;
+             
+        }
+
+        .Texto1{
+          font-weight: lighter;
+        }
+
+        .texto{
+            border: 0;
+            padding-right: 50px;
+            padding: 5px;
+        }
+
+        
+
+        .tx{
+            font-weight: lighter;
+        }
+
+        .button2{
+        background-color: #1d1d1d; /* Green */
+            border: none;
+             color: white;
+             padding: 10px 10px;
+             width: 60px;
+             text-align: center;
+             text-decoration: none;
+             display: inline-block;
+             font-size: 10px;
+        }
+
+        #texto2{
+          background-color: rgb(217, 184, 38);
+          font-weight: bolder;
+          text-align: center;
+        }
+
+        .img{
+          padding-right: 20px;
+          height: 100px;
+        }
+        
+        
+    </style>
+</body>
+</html>
